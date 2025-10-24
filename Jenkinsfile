@@ -5,7 +5,7 @@ pipeline {
 
         stage('Pull Code') {
             steps {
-                // Pull latest code from your GitHub repository using credentials
+                // Pull latest code from GitHub using credentials
                 git branch: 'main',
                     credentialsId: 'github-credentials',
                     url: 'https://github.com/Ammullupramidha/casestudy.git'
@@ -22,8 +22,10 @@ pipeline {
         stage('Push Image to DockerHub') {
             steps {
                 echo '🚀 Pushing Docker image to DockerHub...'
-                withCredentials([string(credentialsId: 'dockerhub-pass', variable: 'DOCKER_HUB_PASS')]) {
-                    bat 'echo %DOCKER_HUB_PASS% | docker login -u Pramidha --password-stdin'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-pass', 
+                                                 usernameVariable: 'DOCKER_USER', 
+                                                 passwordVariable: 'DOCKER_PASS')]) {
+                    bat 'echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin'
                     bat 'docker push pramidha/appointment-scheduler:latest'
                 }
             }
