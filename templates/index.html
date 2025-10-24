@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Appointment Scheduler</title>
+</head>
+<body>
+    <h1>Appointment List</h1>
+    <ul>
+        {% for appt in appointments %}
+        <li>{{ appt.name }} - {{ appt.date }} - {{ appt.time }}</li>
+        {% endfor %}
+    </ul>
+    <a href="/book">Book New Appointment</a>
+</body>
+</html>
